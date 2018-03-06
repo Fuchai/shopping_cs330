@@ -27,16 +27,22 @@ class Item extends Subject{
 class ShoppingList extends Subject{
     constructor() {
         super()
-        this.newItems = []
+        this._newItems = []
         this.oldItems = [];
+        this.subscribe(refreshView)
     }
 
     addItem(it) {
         this.newItems.push(it)
         this.publish('added item',this)
     }
+
+    get newItems(){
+        return this._newItems
+    }
 }
 
 function refreshView(){
     mainView.refreshView()
+    console.log('refreshed!')
 }
