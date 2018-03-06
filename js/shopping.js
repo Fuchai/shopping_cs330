@@ -1,9 +1,16 @@
+'use strict'
+
 var stores = ['Fareway', 'Ace Hardware', 'Caseys', 'The Hatchery', 'Amundsens']
 var sections = ['Produce', 'Meats', 'Cereal', 'Canned Goods', 'Frozen Foods', 'Dairy', 'Liquor', 'Tools', 'Clothing']
+var itemList= []
+var mainView= new View()
 
 function clickedon() {
     let rowcolids = ['itemname', 'qty', 'store', 'category', 'price']
     let vals = []
+    let newItem= new Item(document.getElementById('itemname').value,document.getElementById('qty').value,
+        document.getElementById('store').value,document.getElementById('category').value,document.getElementById('price').value)
+    itemList.push(newItem)
     for (let cid of rowcolids) {
         vals.push(document.getElementById(cid).value)
     }
@@ -17,7 +24,7 @@ function makeRow(valueList, parent) {
     cb.type = "checkbox"
     cb.classList.add("form-control")
     row.appendChild(cb)
-    
+
     for (let val of valueList) {
         let td = document.createElement("td")
         td.innerHTML = val
@@ -40,4 +47,3 @@ $(document).ready(function () {
     populateSelect('store', stores)
     populateSelect('category', sections)
 })
-
