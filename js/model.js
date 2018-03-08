@@ -29,7 +29,7 @@ class ShoppingList extends Subject{
         super()
         this._newItems = []
         this.oldItems = [];
-        this.subscribe(refreshView)
+        this.subscribe(mainView.refreshView)
     }
 
     addItem(it) {
@@ -40,9 +40,4 @@ class ShoppingList extends Subject{
     get newItems(){
         return this._newItems
     }
-}
-
-function refreshView(){
-    mainView.refreshView()
-    console.log('refreshed!')
 }

@@ -7,6 +7,7 @@ class View{
     refreshView(msg){
         let tbl=document.querySelector('table')
         for (let _=0; _<this.shoppingList.length;_++){
+            console.log(ShoppingList.newItems[_].properties)
             this.makeRow(ShoppingList.newItems[_].properties)
         }
         console.log('view refreshed')
