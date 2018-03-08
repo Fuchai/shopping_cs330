@@ -1,6 +1,37 @@
 'use strict';
-class Item {
+
+class Subject {
+
+    constructor() {
+        this.handlers = []
+    }
+
+    subscribe(fn) {
+        this.handlers.push(fn);
+    }
+
+    unsubscribe(fn) {
+        this.handlers = this.handlers.filter(
+            function(item) {
+                if (item !== fn) {
+                    return item;
+                }
+            }
+        );
+    }
+
+    publish(msg, someobj) {
+        var scope = someobj || window;
+        for (let fn of this.handlers) {
+            fn(scope, msg)
+        }
+    }
+}
+
+
+class Item extends Subject{
     constructor(name, quantity, priority, store, section, price) {
+        super()
         this.name = name;
         this.quantity = quantity;
         this.priority = priority;
@@ -19,37 +50,7 @@ class Item {
     set purchased(nv) {
         this._purchased = nv;
         alert(`${this.name} was purchased`)
-    }
-
-
-
-}
-
-class Subject {
- 
-    constructor() {
-        this.handlers = []
-    }
-
-    subscribe(fn) {
-            this.handlers.push(fn);
-        }
-     
-    unsubscribe(fn) {
-        this.handlers = this.handlers.filter(
-            function(item) {
-                if (item !== fn) {
-                    return item;
-                }
-            }
-        );
-    }
-     
-    publish(msg, someobj) {
-        var scope = someobj || window;
-        for (let fn of this.handlers) {
-            fn(scope, msg)
-        }
+        this.publish("purchased",this)
     }
 }
 
@@ -57,13 +58,23 @@ class Subject {
 class ShoppingList extends Subject {
     constructor() {
         super()
-        this.newItems = []
+        this._newItems = []
         this.oldItems = [];
     }
 
     addItem(it) {
         this.newItems.push(it)
+        it.subscribe(this.publish.bind(this))
         this.publish('newitem', this)
+        console.log("item added")
+    }
+
+    get newItems(){
+        return this._newItems
+    }
+
+    set newItems(value) {
+        this._newItems = value;
     }
 }
 

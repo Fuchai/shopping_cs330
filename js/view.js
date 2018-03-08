@@ -15,6 +15,9 @@ class ShoppingView {
     addRow(item, parent) {
         let row = document.createElement("tr")
         row.classList.add(item.priority)
+        if (item.purhcased) {
+            row.classList.add("bold")
+        }
         let cb = document.createElement("input")
         cb.type = "checkbox"
         cb.classList.add("form-control")

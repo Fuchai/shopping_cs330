@@ -7,5 +7,9 @@
 }
 
 .low {
-    background-color: #ded
+    background-color: #ded;
+}
+
+.bold{
+    font-weight: bold;
 }
