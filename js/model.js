@@ -20,10 +20,10 @@ class Subject {
         );
     }
 
-    publish(msg, someobj) {
+    publish(someobj, msg) {
         var scope = someobj || window;
         for (let fn of this.handlers) {
-            fn(scope, msg)
+            fn(scope,msg)
         }
     }
 }
@@ -40,6 +40,7 @@ class Item extends Subject{
         this.price = price;
 
         this._purchased = false;
+        this.parent;
 
     }
 
@@ -50,7 +51,7 @@ class Item extends Subject{
     set purchased(nv) {
         this._purchased = nv;
         alert(`${this.name} was purchased`)
-        this.publish("purchased",this)
+        this.publish(this.parent,'purchased publish')
     }
 }
 
@@ -63,9 +64,10 @@ class ShoppingList extends Subject {
     }
 
     addItem(it) {
+        it.parent=this
         this.newItems.push(it)
-        it.subscribe(this.publish.bind(this))
-        this.publish('newitem', this)
+        it.subscribe(this.publish)
+        this.publish(this,'newitem')
         console.log("item added")
     }
 
