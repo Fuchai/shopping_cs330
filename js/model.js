@@ -19,7 +19,7 @@ class Subject {
         );
     }
      
-    publish(msg, someobj) {
+    publish(someobj,msg) {
         var scope = someobj || window;
         for (let fn of this.handlers) {
             fn(scope, msg)
@@ -49,11 +49,11 @@ class Item extends Subject {
     set purchased(nv) {
         if (this._purchased == false) {
             this._purchased = nv;
-            this.publish('removed purchase',this)
+            this.publish(this,'removed purchase')
         } else {
             this._purchased = false;
             clearTimeout(this.to)
-            this.publish('added purchase',this)
+            this.publish(this,'added purchase')
         }
 
     }
@@ -75,14 +75,14 @@ class ShoppingList extends Subject {
         this.newItems.push(it);
         let self = this;
         it.subscribe(function(scope,msg) {
-            self.publish(msg, self)
+            self.publish(self, msg)
             if(it.purchased == true) {
                 it.to = setTimeout(function() {
                     self.removeItem(it);
                 }, 2000)
             }
         });
-        this.publish('newitem', this)
+        this.publish(this, 'newitem')
     }
 
     removeItem(it) {
@@ -90,7 +90,7 @@ class ShoppingList extends Subject {
         if(idx > -1) {
             let it = this.newItems.splice(idx, 1)
         }
-        this.publish('removed_final', this)
+        this.publish(this,'removed_final')
     }
 }
 
