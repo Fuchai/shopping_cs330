@@ -24,6 +24,7 @@ class Subject {
         for (let fn of this.handlers) {
             fn(scope, msg)
         }
+        console.log(msg)
     }
 }
 
@@ -48,11 +49,11 @@ class Item extends Subject {
     set purchased(nv) {
         if (this._purchased == false) {
             this._purchased = nv;
-            this.publish('removed',this)
+            this.publish('removed purchase',this)
         } else {
             this._purchased = false;
             clearTimeout(this.to)
-            this.publish('added',this)
+            this.publish('added purchase',this)
         }
 
     }
@@ -73,8 +74,8 @@ class ShoppingList extends Subject {
     addItem(it) {
         this.newItems.push(it);
         let self = this;
-        it.subscribe(function(a,b) {
-            self.publish('removed_start', self)
+        it.subscribe(function(scope,msg) {
+            self.publish(msg, self)
             if(it.purchased == true) {
                 it.to = setTimeout(function() {
                     self.removeItem(it);
