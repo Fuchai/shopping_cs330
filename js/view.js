@@ -32,6 +32,14 @@ class ShoppingView {
             }
             row.appendChild(td)
         }
-        parent.appendChild(row)
+        if (item.purchased){
+            this.to=setTimeout(function(){
+                row=document.createDocumentFragment()
+                parent.appendChild(row)
+            },2000)
+
+        }else{
+            parent.appendChild(row)
+        }
     }
 }

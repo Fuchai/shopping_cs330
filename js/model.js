@@ -73,14 +73,18 @@ class ShoppingList extends Subject {
     addItem(it) {
         this.newItems.push(it);
         let self = this;
-        it.subscribe(function(a,b) {
-            self.publish('removed_start', self)
-            if(it.purchased == true) {
-                it.to = setTimeout(function() {
-                    self.removeItem(it);
-                }, 2000)
-            }
-        });
+        // it.subscribe(function(a,b) {
+        //     self.publish('removed_start', self)
+        //     if(it.purchased == true) {
+        //         it.to = setTimeout(function() {
+        //             self.removeItem(it);
+        //         }, 2000)
+        //     }
+        // });
+
+        it.subscribe(function(scope,msg){
+            self.publish('item._purchased changed',self)
+        })
         this.publish('newitem', this)
     }
 
