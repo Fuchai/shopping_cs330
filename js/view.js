@@ -10,6 +10,7 @@ class ShoppingView {
         for (let item of shoppingList.newItems) {
             this.addRow(item, tbl)
         }
+        console.log('view refreshed')
     }
 
     addRow(item, parent) {

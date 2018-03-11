@@ -68,7 +68,9 @@ class ShoppingList extends Subject {
     constructor() {
         super()
         this.newItems = []
-        this.oldItems = [];
+        this.oldItems = []
+        this.lastSortedBy=null;
+        this.descending=true
     }
 
     addItem(it) {
@@ -91,6 +93,36 @@ class ShoppingList extends Subject {
             let it = this.newItems.splice(idx, 1)
         }
         this.publish(this,'removed_final')
+    }
+
+    sortBy(columnName){
+
+        // console.log(columnName)
+        columnName=columnName.toLowerCase()
+        if (columnName=='item'){
+            columnName='name'
+        }
+
+        if (this.lastSortedBy==columnName){
+            this.descending=!this.descending
+        }else{
+            this.lastSortedBy=columnName
+            this.descending=true
+        }
+
+        let self=this
+
+        function compare(itemA,itemB){
+            // console.log(columnName,itemA[columnName],itemA[columnName]>itemB[columnName])
+            if (self.descending){
+                return itemA[columnName]>itemB[columnName]
+            }else{
+                return itemA[columnName]<itemB[columnName]
+            }
+        }
+
+        this.newItems.sort(compare)
+        this.publish(this,'sorted')
     }
 }
 
