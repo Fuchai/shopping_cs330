@@ -19,11 +19,12 @@ class Subject {
         );
     }
      
-    publish(msg, someobj) {
+    publish(someobj,msg) {
         var scope = someobj || window;
         for (let fn of this.handlers) {
             fn(scope, msg)
         }
+        console.log(msg)
     }
 }
 
@@ -48,11 +49,11 @@ class Item extends Subject {
     set purchased(nv) {
         if (this._purchased == false) {
             this._purchased = nv;
-            this.publish('removed',this)
+            this.publish(this,'removed purchase')
         } else {
             this._purchased = false;
             clearTimeout(this.to)
-            this.publish('added',this)
+            this.publish(this,'added purchase')
         }
 
     }
@@ -67,12 +68,15 @@ class ShoppingList extends Subject {
     constructor() {
         super()
         this.newItems = []
-        this.oldItems = [];
+        this.oldItems = []
+        this.lastSortedBy=null;
+        this.descending=true
     }
 
     addItem(it) {
         this.newItems.push(it);
         let self = this;
+<<<<<<< HEAD
         // it.subscribe(function(a,b) {
         //     self.publish('removed_start', self)
         //     if(it.purchased == true) {
@@ -86,6 +90,17 @@ class ShoppingList extends Subject {
             self.publish('item._purchased changed',self)
         })
         this.publish('newitem', this)
+=======
+        it.subscribe(function(scope,msg) {
+            self.publish(self, msg)
+            if(it.purchased == true) {
+                it.to = setTimeout(function() {
+                    self.removeItem(it);
+                }, 2000)
+            }
+        });
+        this.publish(this, 'newitem')
+>>>>>>> master
     }
 
     removeItem(it) {
@@ -93,7 +108,37 @@ class ShoppingList extends Subject {
         if(idx > -1) {
             let it = this.newItems.splice(idx, 1)
         }
-        this.publish('removed_final', this)
+        this.publish(this,'removed_final')
+    }
+
+    sortBy(columnName){
+
+        // console.log(columnName)
+        columnName=columnName.toLowerCase()
+        if (columnName=='item'){
+            columnName='name'
+        }
+
+        if (this.lastSortedBy==columnName){
+            this.descending=!this.descending
+        }else{
+            this.lastSortedBy=columnName
+            this.descending=true
+        }
+
+        let self=this
+
+        function compare(itemA,itemB){
+            // console.log(columnName,itemA[columnName],itemA[columnName]>itemB[columnName])
+            if (self.descending){
+                return itemA[columnName]>itemB[columnName]
+            }else{
+                return itemA[columnName]<itemB[columnName]
+            }
+        }
+
+        this.newItems.sort(compare)
+        this.publish(this,'sorted')
     }
 }
 

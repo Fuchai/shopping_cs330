@@ -14,7 +14,6 @@ function clickedon() {
     shoppingModel.addItem(it)
 }
 
-
 function populateSelect(selectId, sList) {
     let sel = document.getElementById(selectId, sList)
     for (let s of sList) {
@@ -30,3 +29,7 @@ $(document).ready(function () {
     populateSelect('category', sections)
 })
 
+$(document).on('click','th',function(){
+    shoppingModel.sortBy($(this).text())
+    console.log($(this).text())
+})
