@@ -24,6 +24,14 @@ function populateSelect(selectId, sList) {
     }
 }
 
+function save(){
+    localStorage.setItem("shoppingList",shoppingModel)
+}
+
+function load(){
+    shoppingModel=localStorage.getItem("shoppingList")
+}
+
 $(document).ready(function () {
     populateSelect('store', stores)
     populateSelect('category', sections)
