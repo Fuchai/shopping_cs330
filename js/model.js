@@ -76,7 +76,6 @@ class ShoppingList extends Subject {
     addItem(it) {
         this.newItems.push(it);
         let self = this;
-<<<<<<< HEAD
         // it.subscribe(function(a,b) {
         //     self.publish('removed_start', self)
         //     if(it.purchased == true) {
@@ -90,17 +89,7 @@ class ShoppingList extends Subject {
             self.publish('item._purchased changed',self)
         })
         this.publish('newitem', this)
-=======
-        it.subscribe(function(scope,msg) {
-            self.publish(self, msg)
-            if(it.purchased == true) {
-                it.to = setTimeout(function() {
-                    self.removeItem(it);
-                }, 2000)
-            }
-        });
-        this.publish(this, 'newitem')
->>>>>>> master
+
     }
 
     removeItem(it) {
