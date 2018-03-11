@@ -4,7 +4,7 @@ var sections = ['Produce', 'Meats', 'Cereal', 'Canned Goods', 'Frozen Foods', 'D
 var shoppingModel = new ShoppingList()
 var myView = new ShoppingView(shoppingModel)
 
-function clickedon() {
+function clickedAddItem() {
     let rowcolids = ['itemname', 'qty', 'store', 'category', 'price', 'priority']
     let vals = {}
     for (let cid of rowcolids) {
@@ -24,12 +24,12 @@ function populateSelect(selectId, sList) {
     }
 }
 
-function save(){
-    localStorage.setItem("shoppingList",shoppingModel)
+function loadShoppingList(){
+    shoppingModel.load()
 }
 
-function load(){
-    shoppingModel=localStorage.getItem("shoppingList")
+function saveShoppingList(){
+    shoppingModel.save()
 }
 
 $(document).ready(function () {
@@ -39,5 +39,5 @@ $(document).ready(function () {
 
 $(document).on('click','th',function(){
     shoppingModel.sortBy($(this).text())
-    console.log($(this).text())
+    // console.log($(this).text())
 })

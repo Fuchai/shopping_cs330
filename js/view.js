@@ -4,13 +4,13 @@ class ShoppingView {
         model.subscribe(this.redrawList.bind(this))
     }
 
-    redrawList(shoppingList, msg) {
+    redrawList(shoppingList, msg='view refreshed') {
         let tbl = document.getElementById("shoppinglist")
         tbl.innerHTML = ""
         for (let item of shoppingList.newItems) {
             this.addRow(item, tbl)
         }
-        console.log('view refreshed')
+        console.log(msg)
     }
 
     addRow(item, parent) {
