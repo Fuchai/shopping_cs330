@@ -29,7 +29,7 @@ class Subject {
                 console.log(err)
             }
         }
-        console.log(msg)
+        console.log(msg+", calling from "+someobj.name)
     }
 }
 
@@ -71,7 +71,6 @@ class ShoppingList extends Subject {
     constructor() {
         super()
         this.newItems = []
-        this.oldItems = []
         this.lastSortedBy = null;
         this.descending = true
     }
@@ -96,6 +95,11 @@ class ShoppingList extends Subject {
             let it = this.newItems.splice(idx, 1)
         }
         this.publish(this, 'removed_final')
+    }
+
+    removeAll(){
+        this.newItems=[]
+        this.publish(this,'removed all items')
     }
 
     sortBy(columnName) {
