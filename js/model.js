@@ -1,6 +1,6 @@
 'use strict';
 class Subject {
- 
+
     constructor() {
         this.handlers = []
     }
@@ -8,7 +8,7 @@ class Subject {
     subscribe(fn) {
             this.handlers.push(fn);
         }
-     
+
     unsubscribe(fn) {
         this.handlers = this.handlers.filter(
             function(item) {
@@ -18,7 +18,7 @@ class Subject {
             }
         );
     }
-     
+
     publish(someobj,msg) {
         var scope = someobj || window;
         for (let fn of this.handlers) {
@@ -45,7 +45,7 @@ class Item extends Subject {
     get purchased() {
         return this._purchased;
     }
-    
+
     set purchased(nv) {
         if (this._purchased == false) {
             this._purchased = nv;
@@ -76,15 +76,19 @@ class ShoppingList extends Subject {
     addItem(it) {
         this.newItems.push(it);
         let self = this;
-        it.subscribe(function(scope,msg) {
-            self.publish(self, msg)
-            if(it.purchased == true) {
-                it.to = setTimeout(function() {
-                    self.removeItem(it);
-                }, 2000)
-            }
-        });
-        this.publish(this, 'newitem')
+        // it.subscribe(function(a,b) {
+        //     self.publish('removed_start', self)
+        //     if(it.purchased == true) {
+        //         it.to = setTimeout(function() {
+        //             self.removeItem(it);
+        //         }, 2000)
+        //     }
+        // });
+
+        it.subscribe(function(scope,msg){
+            self.publish('item._purchased changed',self)
+        })
+        this.publish('newitem', this)
     }
 
     removeItem(it) {
@@ -125,4 +129,3 @@ class ShoppingList extends Subject {
         this.publish(this,'sorted')
     }
 }
-
