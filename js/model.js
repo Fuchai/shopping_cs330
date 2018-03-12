@@ -131,18 +131,14 @@ class ShoppingList extends Subject {
 
     save() {
         for (var property in this) {
-            if (this.hasOwnProperty(property)) {
-                localStorage.setItem("shoppingList " + property, JSON.stringify(this[property]))
-                console.log("shoppingList " + property)
-            }
+            localStorage.setItem("shoppingList " + property, JSON.stringify(this[property]))
+            console.log("shoppingList " + property)
         }
     }
 
     load() {
         for (var property in this) {
-            if (this.hasOwnProperty(property)) {
-                this[property] = JSON.parse(localStorage.getItem("shoppingList " + property))
-            }
+            this[property] = JSON.parse(localStorage.getItem("shoppingList " + property))
         }
         this.publish(this, "loading")
     }

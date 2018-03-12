@@ -24,13 +24,16 @@ function populateSelect(selectId, sList) {
     }
 }
 
-function loadShoppingList(){
-    shoppingModel.load()
+function saveShoppingList(){
+    localStorage.setItem("shoppingModel",JSON.stringify(shoppingModel))
+    console.log("saveShoppingList run")
 }
 
-function saveShoppingList(){
-    shoppingModel.save()
-}
+// Apparently this does not work. Probably because the constructor is not called
+// function loadShoppingList(){
+//     var shoppingaModel=JSON.parse(localStorage.getItem("shoppingModel"))
+//     shoppingaModel.publish(shoppingModel,"refresh view")
+// }
 
 $(document).ready(function () {
     populateSelect('store', stores)
