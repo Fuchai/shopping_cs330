@@ -34,7 +34,7 @@ class StorageManager{
     save(shoppingList){
         let localStorageList= JSON.stringify(shoppingList.newItems)
         localStorage.setItem(this.lsname, localStorageList)
-        console.log("saved manually: "+this.lsname)
+        console.log("saved manually, variable name: "+this.lsname)
     }
 
     load(){

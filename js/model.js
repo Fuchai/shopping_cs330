@@ -29,7 +29,7 @@ class Subject {
                 console.log(err)
             }
         }
-        console.log(msg+", calling from "+someobj.name)
+        console.log(msg+", calling from "+someobj.constructor.name)
     }
 }
 
