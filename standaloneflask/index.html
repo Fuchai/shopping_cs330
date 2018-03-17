@@ -6,62 +6,88 @@
     <title>Add Numbers!</title>
 </head>
 <body>
-<div class="panel panel-default col-md-12">
-    <div class="panel-body">
-        <div class="row form-inline">
-            <div class="form-group">
-                <div class="col-sm-2">
-                    <label for="Number 1" class="sr-only"></label>
-                    <input id="Number 1" class="form-control input-group-lg reg_name" type="text" name="number1" title="Enter Number 1" placeholder="Number 1">
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+                <div class="row form-group">
+                    <div class="col-sm-2">
+                        <label for="Number 1" class="sr-only"></label>
+                        <input id="Number 1" class="form-control input-group reg_name" type="text" name="number1"
+                               title="Enter Number 1" placeholder="Number 1">
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="Number 2" class="sr-only"></label>
+                        <input id="Number 2" class="form-control input-group reg_name" type="text" name="number2"
+                               title="Enter Number 2" placeholder="Number 2">
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="Number 3" class="sr-only"></label>
+                        <input id="Number 3" class="form-control input-group reg_name" type="text" name="number3"
+                               title="Enter Number 3" placeholder="Number 3">
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="Number 4" class="sr-only"></label>
+                        <input id="Number 4" class="form-control input-group reg_name" type="text" name="number4"
+                               title="Enter Number 4" placeholder="Number 4">
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="Number 5" class="sr-only"></label>
+                        <input id="Number 5" class="form-control input-group reg_name" type="text" name="number5"
+                               title="Enter Number 5" placeholder="Number 5">
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="Number 6" class="sr-only"></label>
+                        <input id="Number 6" class="form-control input-group reg_name" type="text" name="number6"
+                               title="Enter Number 6" placeholder="Number 6">
+                    </div>
                 </div>
-                <div class="col-sm-2">
-                    <label for="Number 2" class="sr-only"></label>
-                    <input id="Number 2" class="form-control input-group-lg reg_name" type="text" name="number2" title="Enter Number 2" placeholder="Number 2">
-                </div>
-                <div class="col-sm-2">
-                    <label for="Number 3" class="sr-only"></label>
-                    <input id="Number 3" class="form-control input-group-lg reg_name" type="text" name="number3" title="Enter Number 3" placeholder="Number 3">
-                </div>
-                <div class="col-sm-2">
-                    <label for="Number 4" class="sr-only"></label>
-                    <input id="Number 4" class="form-control input-group-lg reg_name" type="text" name="number4" title="Enter Number 4" placeholder="Number 4">
-                </div>
-                <div class="col-sm-2">
-                    <label for="Number 5" class="sr-only"></label>
-                    <input id="Number 5" class="form-control input-group-lg reg_name" type="text" name="number5" title="Enter Number 5" placeholder="Number 5">
-                </div>
-                <div class="col-sm-2">
-                    <label for="Number 6" class="sr-only"></label>
-                    <input id="Number 6" class="form-control input-group-lg reg_name" type="text" name="number6" title="Enter Number 6" placeholder="Number 6">
-                </div>
-            </div>
         </div>
     </div>
 </div>
-<div class="form-inline " style="float: right;">
-    <button onclick="adder()" class ="btn btn-primary" id=adderbutt>Add the numbers!</button>
+<div class="container">
+    <div class="jumbotron col-md-12 center-block">
+        <h1 class="display-3" id="result">What do you want?</h1>
+        <p class="lead">Enter your input and I will calculate the sum for you.</p>
+        <div style="float: right;">
+            <button onclick="adder()" class="btn btn-primary" id=adderbutt>Add the numbers!</button>
+        </div>
+    </div>
 </div>
-<div>
-    <h3 id="result">What do you want?</h3>
-</div>
+
 
 <script>
-    function adder(){
-        var numbers=[]
-        for (let i=1; i<7; i++){
-            numbers.push(document.getElementById("Number "+i).value)
-            console.log(typeof(document.getElementById("Number "+i).value))
+    function adder() {
+        let numbers = []
+        for (let i = 1; i < 7; i++) {
+            let num=document.getElementById("Number " + i).value
+            if (num!=""){
+                numbers.push(num)
+            }
+            // console.log(typeof(document.getElementById("Number " + i).value))
         }
-
+        console.log(numbers)
         console.log("starting fetch")
-        console.log("/adder?num1="+numbers[0]+"&num2="+numbers[1])
-        fetch("http://localhost:5001/adder?num1="+numbers[0]+"&num2="+numbers[1])
-            .then(function(response){
+
+        let fetch_string="http://localhost:5001/adder?"
+        let index=1
+        // Remember: of, not in!
+        for (num of numbers){
+            fetch_string=fetch_string+"num"+index.toString()+"="+num+"&"
+            console.log(num)
+            console.log(fetch_string)
+            index+=1
+        }
+       fetch_string= fetch_string.slice(0,-1)
+        console.log(fetch_string)
+        fetch(fetch_string,
+            {mode: "cors"})
+            .then(function (response) {
+                console.log(response)
                 return response.json()
             })
             .catch(error => console.error("error: ", error))
-            .then(function(myJson){
-                document.getElementById("result").innerHTML=myJson.result;
+            .then(function (myJson) {
+                document.getElementById("result").innerHTML = myJson.answer;
                 console.log('all done')
             })
     }
