@@ -2,9 +2,70 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>Add Numbers!</title>
 </head>
 <body>
-$END$
+<div class="panel panel-default col-md-12">
+    <div class="panel-body">
+        <div class="row form-inline">
+            <div class="form-group">
+                <div class="col-sm-2">
+                    <label for="Number 1" class="sr-only"></label>
+                    <input id="Number 1" class="form-control input-group-lg reg_name" type="text" name="number1" title="Enter Number 1" placeholder="Number 1">
+                </div>
+                <div class="col-sm-2">
+                    <label for="Number 2" class="sr-only"></label>
+                    <input id="Number 2" class="form-control input-group-lg reg_name" type="text" name="number2" title="Enter Number 2" placeholder="Number 2">
+                </div>
+                <div class="col-sm-2">
+                    <label for="Number 3" class="sr-only"></label>
+                    <input id="Number 3" class="form-control input-group-lg reg_name" type="text" name="number3" title="Enter Number 3" placeholder="Number 3">
+                </div>
+                <div class="col-sm-2">
+                    <label for="Number 4" class="sr-only"></label>
+                    <input id="Number 4" class="form-control input-group-lg reg_name" type="text" name="number4" title="Enter Number 4" placeholder="Number 4">
+                </div>
+                <div class="col-sm-2">
+                    <label for="Number 5" class="sr-only"></label>
+                    <input id="Number 5" class="form-control input-group-lg reg_name" type="text" name="number5" title="Enter Number 5" placeholder="Number 5">
+                </div>
+                <div class="col-sm-2">
+                    <label for="Number 6" class="sr-only"></label>
+                    <input id="Number 6" class="form-control input-group-lg reg_name" type="text" name="number6" title="Enter Number 6" placeholder="Number 6">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-inline " style="float: right;">
+    <button onclick="adder()" class ="btn btn-primary" id=adderbutt>Add the numbers!</button>
+</div>
+<div>
+    <h3 id="result">What do you want?</h3>
+</div>
+
+<script>
+    function adder(){
+        var numbers=[]
+        for (let i=1; i<7; i++){
+            numbers.push(document.getElementById("Number "+i).value)
+            console.log(typeof(document.getElementById("Number "+i).value))
+        }
+
+        console.log("starting fetch")
+        console.log("/adder?num1="+numbers[0]+"&num2="+numbers[1])
+        fetch("http://localhost:5001/adder?num1="+numbers[0]+"&num2="+numbers[1])
+            .then(function(response){
+                return response.json()
+            })
+            .catch(error => console.error("error: ", error))
+            .then(function(myJson){
+                document.getElementById("result").innerHTML=myJson.result;
+                console.log('all done')
+            })
+    }
+</script>
+
 </body>
 </html>

@@ -2,9 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Document</title>
 </head>
 <body>
-$END$
+<div id="foo"></div>
 </body>
+<script>
+    var xhttp= new XMLHttpRequest()
+    xhttp.onreadystatechange = function(){
+        console.log(this.readyState)
+        if (this.readyState==4 && this.status==200){
+            num=JSON.parse(xhttp.responseText)
+            document.getElementById("foo").innerHTML=num.number
+        }
+    }
+    xhttp.open("GET","/getnum",true)
+    xhttp.send()
+    console.log("sent request")
+</script>
 </html>
