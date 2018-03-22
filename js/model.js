@@ -133,19 +133,19 @@ class ShoppingList extends Subject {
     }
 
 
-    save() {
-        for (var property in this) {
-            localStorage.setItem("shoppingList " + property, JSON.stringify(this[property]))
-            console.log("shoppingList " + property)
-        }
-    }
-
-    load() {
-        for (var property in this) {
-            this[property] = JSON.parse(localStorage.getItem("shoppingList " + property))
-        }
-        this.publish(this, "loading")
-    }
+    // save() {
+    //     for (var property in this) {
+    //         localStorage.setItem("shoppingList " + property, JSON.stringify(this[property]))
+    //         console.log("shoppingList " + property)
+    //     }
+    // }
+    //
+    // load() {
+    //     for (var property in this) {
+    //         this[property] = JSON.parse(localStorage.getItem("shoppingList " + property))
+    //     }
+    //     this.publish(this, "loading")
+    // }
 }
 
 
