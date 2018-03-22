@@ -1,4 +1,4 @@
-class FlaskStorageSaver {
+class FlaskStorageManager {
 
     constructor(model) {
         let self = this
@@ -11,7 +11,7 @@ class FlaskStorageSaver {
         // it does not save the whole object. Instead, it saves all the items.
         // this approach avoids our problem.
         let ls_list = JSON.stringify({newItems:slist.newItems})
-        let post_string="http://localhost:5001/saveshoppinglist"
+        let post_string="/saveshoppinglist"
 
         let config={}
         config.method='POST'
@@ -34,7 +34,7 @@ class FlaskStorageSaver {
     loadFlask(){
         let model=this.model
         this.model.removeAll()
-        let fromFlask=fetch("http://localhost:5001/getshoppinglist")
+        let fromFlask=fetch("/getshoppinglist",{mode:"cors"})
             .then(function (response) {
                 console.log(response)
                 return response.json()
