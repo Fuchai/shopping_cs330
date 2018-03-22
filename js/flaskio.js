@@ -1,17 +1,10 @@
 class FlaskStorageSaver {
 
-    constructor(model,lsname) {
-        this.lsname = lsname;
+    constructor(model) {
         let self = this
         model.subscribe(function(slist, msg) {
             self.saveFlask(slist)
         })
-        // // now restore from localstorage
-        // let restore_list = JSON.parse(localStorage.getItem(self.lsname))
-        // for(let vals of restore_list) {
-        //     let it = new Item(vals.name, vals.quantity, vals.priority, vals.store, vals.section, vals.price)
-        //     model.addItem(it)
-        // }
     }
 
     saveFlask(slist) {
@@ -26,10 +19,16 @@ class FlaskStorageSaver {
         config.header={'Content-Type':'application/json','Accept':'application/json'}
         config.mode="cors"
 
-        fetch(post_string,confg).then(function(response){
-            console.log(response)
-            return response.json
-        })
+        fetch(post_string,config)
+            // .then(function(response){
+            // console.log(response)
+            // return response.json
+            // })
+            // .catch(error => console.error("error: ", error))
+            // .then(function (myJson) {
+            //     document.getElementById("result").innerHTML = myJson.answer;
+            //     console.log('all done')
+            // })
     }
 
     loadFlask(){

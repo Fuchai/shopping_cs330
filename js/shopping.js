@@ -4,6 +4,7 @@ var sections = ['Produce', 'Meats', 'Cereal', 'Canned Goods', 'Frozen Foods', 'D
 var shoppingModel = new ShoppingList()
 var myView = new ShoppingView(shoppingModel)
 var storageManager= new StorageManager(shoppingModel,"shoppingList")
+var flaskManager= new FlaskStorageSaver(shoppingModel)
 
 function clickedAddItem() {
     let rowcolids = ['itemname', 'qty', 'store', 'category', 'price', 'priority']
@@ -43,12 +44,14 @@ function removeAll(){
 }
 
 function saveShoppingList(){
-    storageManager.save(shoppingModel)
+    flaskManager.saveFlask(shoppingModel)
+    // storageManager.save(shoppingModel)
     // console.log('calling save shopping list')
 }
 
 function loadShoppingList(){
-    storageManager.load()
+    flaskManager.loadFlask()
+    // storageManager.load()
     // console.log('calling load shopping list')
 }
 

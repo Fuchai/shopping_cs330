@@ -7,6 +7,8 @@ app =Flask(__name__)
 def anyname():
     res=Response(json.dumps({'number':random.randrange(100)}))
     res.headers['Content-type'] = 'application/json'
+
+
     return res
 
 @app.route('/hello')
