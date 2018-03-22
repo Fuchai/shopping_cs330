@@ -1,21 +1,15 @@
 from flask import Flask, Response
 import random, json
 
-app =Flask(__name__)
+app=Flask(__name__)
 
-@app.route('/getnum')
-def anyname():
-    res=Response(json.dumps({'number':random.randrange(100)}))
-    res.headers['Content-type'] = 'application/json'
-    return res
+@app.route('/getshoppinglist')
+def _():
+    shopping_list=[]
 
-@app.route('/hello')
-def hello():
-    return "<h1> Hello World </h1>"
+@app.route('/saveshoppinglist',method=['POST'])
+def _():
 
 
-@app.route('/')
-def what():
-    return ""
-
-app.run(debug=True, port=5001)
+if __name__=="__main__":
+    app.run(debug=True, port=5001)
