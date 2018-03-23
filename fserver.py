@@ -97,13 +97,14 @@ def _auto():
     #     print(filedir+": file found")
 
     if request.method == 'GET':
-        print(request.method)
-        with open(filedir, "rb") as datafile:
-            # raw=json.load(datafile)
-            raw = datafile.read()
-            res = Response(raw)
-            res.headers['Content-type'] = 'application/json'
-        return res
+        if os.path.exists(filedir):
+            print(request.method)
+            with open(filedir, "rb") as datafile:
+                # raw=json.load(datafile)
+                raw = datafile.read()
+                res = Response(raw)
+                res.headers['Content-type'] = 'application/json'
+            return res
     else:
         print(request.method)
         with open(filedir, "wb") as datafile:

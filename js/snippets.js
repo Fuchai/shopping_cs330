@@ -1,21 +1,20 @@
 'use strict'
 
-class Hello{
-    constructor(a) {
-        this.a = a
-        a="whose"
+class Whatever {
+    constructor(){
+
     }
 
-    print(){
-        console.log(this.a)
+    apple(string,config=false){
+        if (config==true){
+            console.log(string)
+        }
+        else{
+            console.log(string+"false")
+        }
     }
 }
-var a="eh"
-var b=a
-b="wow"
-console.log(a)
-var hello=new Hello(a)
-hello.print()
-a="you"
-hello.print()
-console.log(b)
+
+let newW=new Whatever()
+
+newW.apple("hello")

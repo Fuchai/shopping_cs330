@@ -4,10 +4,11 @@ class FlaskStorageManager {
         this.model=model
         let self = this
         model.subscribe(function(slist, msg) {
-            self.saveFlask(slist,auto=true)
+            self.saveFlask(slist,true)
+            console.log("saved automatically by publish")
         })
 
-        this.loadFlask(auto=true)
+        this.loadFlask(true)
     }
 
     saveFlask(slist,auto=false) {
@@ -37,17 +38,20 @@ class FlaskStorageManager {
             // })
     }
 
+
+    // looks like loadFlask somehow triggered save flask
+
     loadFlask(auto=false){
         console.log("start loading")
         let model=this.model
-        this.model.removeAll()
+        this.model.newItems=[]
         let config={}
         config.method='GET'
         config.header={'Content-Type':'application/json','Accept':'application/json'}
 
-        get_string="/shoppinglist"
+        let get_string="/shoppinglist"
         if (auto==true){
-            get_string=post_string+"auto"
+            get_string=get_string+"auto"
         }
         let fromFlask=fetch(get_string,config)
             .then(function (response) {
@@ -60,8 +64,6 @@ class FlaskStorageManager {
             .then(function (myJson) {
                 let jsjsj=JSON.stringify(myJson)
                 console.log("jsjsjs"+jsjsj)
-
-
                 console.log(JSON.stringify(myJson))
                 // This line took me 30 minutes.
                 // How does it make any sense? I stringified before
@@ -73,7 +75,11 @@ class FlaskStorageManager {
                         let item = new Item(val.name, val.quantity, val.priority, val.store,
                             val.section, val.price)
                         model.addItem(item)
-                        console.log('restored manually')
+                        if (auto==false){
+                            console.log('restored manually')
+                        }else{
+                            console.log('restored automatically')
+                        }
                     }
                 }
                 console.log('all done')
